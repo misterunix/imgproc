@@ -4,10 +4,15 @@ import (
 	"image"
 )
 
+// DitherStucki applies the Stucki dithering algorithm to an image.
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func DitherStucki(imgIn *image.RGBA) *image.RGBA {
 
 	// because of the way look ahead dithering works, it needs to
 	// modify te same image as it is reading from
+
+	imgMod := image.NewRGBA(imgIn.Bounds())
 
 	ww := imgIn.Bounds().Dx()
 	hh := imgIn.Bounds().Dy()
@@ -43,9 +48,9 @@ func DitherStucki(imgIn *image.RGBA) *image.RGBA {
 			errorDiffustion(imgIn, diffErr, 1.0, x+2, y+2)
 
 			if pixel >= 127 {
-				SetPixel(imgIn, x, y, 255)
+				SetPixel(imgMod, x, y, 255)
 			} else {
-				SetPixel(imgIn, x, y, 0)
+				SetPixel(imgMod, x, y, 0)
 			}
 
 		}

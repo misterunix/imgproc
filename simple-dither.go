@@ -7,9 +7,13 @@ import (
 
 // dither an image using only two states. Produces ugly images.
 // value <= 127 = 0, values > 127 = 255
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func DitherSimple(imgIn *image.RGBA) *image.RGBA {
 
 	//imgOut := image.NewRGBA(imgIn.Bounds())
+
+	imgMod := image.NewRGBA(imgIn.Bounds())
 
 	ww := imgIn.Bounds().Dx()
 	hh := imgIn.Bounds().Dy()
@@ -31,6 +35,6 @@ func DitherSimple(imgIn *image.RGBA) *image.RGBA {
 		}
 	}
 
-	return imgIn
+	return imgMod
 
 }
