@@ -3,6 +3,7 @@ package imgproc
 import (
 	"image"
 	"image/color"
+	"image/draw"
 )
 
 // dither an image using only two states. Produces ugly images.
@@ -11,17 +12,24 @@ import (
 // imgIn is passed as a pointer for speed, but is not modified.
 func DitherSimple(imgIn *image.RGBA) *image.RGBA {
 
+	// use draw to create, copy the input image to a new image
+	// and then modify that image in place
+	srcBounds := imgIn.Bounds()
+	src := image.NewRGBA(srcBounds)
+	imgMod := image.NewRGBA(srcBounds)
+	draw.Draw(imgMod, imgMod.Bounds(), src, src.Bounds().Min, draw.Src)
+
 	//imgOut := image.NewRGBA(imgIn.Bounds())
 
-	imgMod := image.NewRGBA(imgIn.Bounds())
+	//	imgMod := image.NewRGBA(imgIn.Bounds())
 
-	ww := imgIn.Bounds().Dx()
-	hh := imgIn.Bounds().Dy()
+	ww := imgMod.Bounds().Dx()
+	hh := imgMod.Bounds().Dy()
 
 	var gray uint8
 	for y := range hh {
 		for x := range ww {
-			r, _, _, _ := imgIn.At(x, y).RGBA()
+			r, _, _, _ := imgMod.At(x, y).RGBA()
 			rv := uint8(r >> 8)
 
 			if rv > 127 {
@@ -30,7 +38,7 @@ func DitherSimple(imgIn *image.RGBA) *image.RGBA {
 				gray = 0
 			}
 
-			imgIn.Set(x, y, color.Gray{gray})
+			imgMod.Set(x, y, color.Gray{gray})
 
 		}
 	}

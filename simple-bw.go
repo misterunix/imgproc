@@ -7,6 +7,8 @@ import (
 
 // converts an image to black and white using the simple average method
 // (r+g+b)/3
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func BWSimple(imgIn *image.RGBA) *image.RGBA {
 	imgOut := image.NewRGBA(imgIn.Bounds())
 

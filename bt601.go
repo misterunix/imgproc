@@ -7,7 +7,10 @@ import (
 )
 
 // converts an image to black and white using the BT.601 standard
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func BWBT601(imgIn *image.RGBA) *image.RGBA {
+
 	imgOut := image.NewRGBA(imgIn.Bounds())
 
 	ww := imgIn.Bounds().Dx()

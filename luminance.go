@@ -8,6 +8,8 @@ import (
 
 // converts an image to black and white using the Luminance method
 // (ITU-R BT.709 coefficients)
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func BWLuminance(imgIn *image.RGBA) *image.RGBA {
 	imgOut := image.NewRGBA(imgIn.Bounds())
 

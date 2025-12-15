@@ -2,20 +2,32 @@ package imgproc
 
 import (
 	"image"
+	"image/draw"
 
 	"math/rand/v2"
 )
 
 // dither an image using random probability. Produces ugly images.
+//
+// imgIn is passed as a pointer for speed, but is not modified.
 func DitherRandom(imgIn *image.RGBA) *image.RGBA {
 
-	ww := imgIn.Bounds().Dx()
-	hh := imgIn.Bounds().Dy()
+	// use draw to create, copy the input image to a new image
+	// and then modify that image in place
+	srcBounds := imgIn.Bounds()
+	src := image.NewRGBA(srcBounds)
+	imgMod := image.NewRGBA(srcBounds)
+	draw.Draw(imgMod, imgMod.Bounds(), src, src.Bounds().Min, draw.Src)
+
+	//imgMod := image.NewRGBA(imgIn.Bounds())
+
+	ww := imgMod.Bounds().Dx()
+	hh := imgMod.Bounds().Dy()
 
 	var gray uint8
 	for y := range hh {
 		for x := range ww {
-			r, _, _, _ := imgIn.At(x, y).RGBA()
+			r, _, _, _ := imgMod.At(x, y).RGBA()
 			rn := uint8(rand.IntN(255))
 			rv := uint8(r >> 8)
 
@@ -24,11 +36,11 @@ func DitherRandom(imgIn *image.RGBA) *image.RGBA {
 			} else {
 				gray = 0
 			}
-			SetPixel(imgIn, x, y, int(gray))
+			SetPixel(imgMod, x, y, int(gray))
 			//imgIn.Set(x, y, color.Gray{gray})
 		}
 	}
 
-	return imgIn
+	return imgMod
 
 }
