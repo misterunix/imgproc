@@ -1,5 +1,7 @@
 # imgproc
 
+## Ive created an error. Project on hold till I can figure it out.
+
 imgproc is a collection of routines that convert image.RGBA into:
 
 - black & white
