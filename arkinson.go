@@ -12,8 +12,7 @@ func DitherArkinson(imgIn *image.RGBA) *image.RGBA {
 
 	// use draw to create, copy the input image to a new image
 	// and then modify that image in place
-	dstBounds := imgIn.Bounds()
-	imgMod := image.NewRGBA(dstBounds)
+	imgMod := image.NewRGBA(imgIn.Bounds())
 	draw.Draw(imgMod, imgMod.Bounds(), imgIn, imgIn.Bounds().Min, draw.Src)
 
 	// because of the way look ahead dithering works, it needs to
@@ -56,6 +55,6 @@ func DitherArkinson(imgIn *image.RGBA) *image.RGBA {
 		}
 	}
 
-	return imgIn
+	return imgMod
 
 }

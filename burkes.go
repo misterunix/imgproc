@@ -12,10 +12,8 @@ func DitherBurkes(imgIn *image.RGBA) *image.RGBA {
 
 	// use draw to create, copy the input image to a new image
 	// and then modify that image in place
-	srcBounds := imgIn.Bounds()
-	src := image.NewRGBA(srcBounds)
-	imgMod := image.NewRGBA(srcBounds)
-	draw.Draw(imgMod, imgMod.Bounds(), src, src.Bounds().Min, draw.Src)
+	imgMod := image.NewRGBA(imgIn.Bounds())
+	draw.Draw(imgMod, imgMod.Bounds(), imgIn, imgIn.Bounds().Min, draw.Src)
 
 	//imgMod := image.NewRGBA(imgIn.Bounds())
 

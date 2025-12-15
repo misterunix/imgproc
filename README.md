@@ -28,3 +28,4 @@ imgproc is a collection of routines that convert image.RGBA into:
   - :heavy_check_mark: Burks
   - :heavy_check_mark: Arkinson
   - :heavy_check_mark: unknown1 - I cant remember where I found the error diffusion pattern for this routine
+
